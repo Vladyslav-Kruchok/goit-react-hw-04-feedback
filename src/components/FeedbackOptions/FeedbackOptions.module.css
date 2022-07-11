@@ -1,0 +1,19 @@
+.section {
+    margin-bottom: 20px;
+}
+.box {
+    margin-top: 20px;
+    display: flex;
+}
+.boxItem:not(:last-child) {
+    margin-right: 5px;
+}
+.btn {
+    background-color: transparent;
+    border: 1px solid var(--second-color);
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: var(--third-color)
+}
