@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
 import styles from "./Statistics.module.css";
 
-export const Statistics = (props) => { 
-    const { good, neutral, bad, total, positivePercentage } = props;
+export const Statistics = ({ good, neutral, bad, total, positivePercentage }) => { 
     return (
         <ul className={styles.box}>
             <li className={styles.boxItem}>Good: {good}</li>

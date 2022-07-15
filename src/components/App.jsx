@@ -1,8 +1,9 @@
+//#region APP-HOOKS #
 //import componet that export as default
 //import Feedback from "./Feedback";
 
-import React from "react";
-
+//#region SYSTEM #
+import React, { useState } from "react";
 //#endregion #
 
 //#region COMPONETS #
@@ -13,56 +14,75 @@ import { Section } from "./Section";
 import { Notification } from "./Notification";
 //#endregion #
 
-export class App extends React.Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0
-  };
-  step = 1;
-  //#region STATE_UPDTE #
-    updateState = (event) => {
-    const nameBtn = event.currentTarget.name;
+//#region XXX #
+//#endregion #
 
-    this.setState(prevState => {
-          return { [nameBtn]: prevState[nameBtn] + this.step };
-    });
-  };
-  //#endregion #
-  
-  //#region UTILS #
-  totalFeedback = () => {
-    return this.state.good + this.state.neutral + this.state.bad;
-  };
+//#region APP #
+export const App = () => { 
+    //#region STATE #
+    const [good, setGood] = useState(0);
+    const [neutral, setNeutral] = useState(0);
+    const [bad, setBad] = useState(0);
+    //#endregion #
+    const step = 1;
+    const feedback = {
+        good: "good",
+        neutral: "neutral",
+        bad: "bad"
+    }
+    //#region STATE_UPDTE #
+    const updateState = (event) => {
+        const nameBtn = event.currentTarget.name;
+        switch (nameBtn) {
+            case feedback.good:
+                setGood(good + step);
+                break;
+            case feedback.neutral:
+                setNeutral(neutral + step);
+                break;
+            case feedback.bad:
+                setBad(bad + step);
+                break;
+            default:
+                return;
+        }
+    };
+    //#endregion #
 
-  positivePercentage = () => {
-    return Math.ceil((this.state.good / this.totalFeedback()) * 100) || 0;
-  };
-  //#endregion
-  render() {
-    const resTotal = this.totalFeedback();
+    //#region UTILS #
+    const totalFeedback = () => {
+    return good + neutral + bad;
+    };
+
+    const positivePercentage = () => {
+    return Math.ceil((good / totalFeedback()) * 100) || 0;
+    };
+    //#endregion
+    const resTotal = totalFeedback();
     return (
-      <div>
+        <div>
         <Section title="Please leave feedback">
-          <FeedbackOptions
-            options={Object.keys(this.state)}
-            onLeaveFeedback={this.updateState}
-          />
+            <FeedbackOptions
+            options={Object.values(feedback)}
+            onLeaveFeedback={updateState}
+            />
         </Section>
 
         <Section title="Statistics">
         {resTotal          
-          ? <Statistics
-              good={this.state.good}
-              neutral={this.state.neutral}
-              bad={this.state.bad}
-              total={resTotal}
-              positivePercentage={this.positivePercentage()}
+            ? <Statistics
+                good={good}
+                neutral={neutral}
+                bad={bad}
+                total={resTotal}
+                positivePercentage={positivePercentage()}
             />
-          : <Notification message="There is no feedback"/>
+            : <Notification message="There is no feedback"/>
         }
         </Section>
-      </div>
+        </div>
     );
-  };
 };
+//#endregion #
+
+//#endregion #

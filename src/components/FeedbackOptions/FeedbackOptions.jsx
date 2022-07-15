@@ -2,9 +2,7 @@ import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
 import styles from "./FeedbackOptions.module.css";
 
-export const FeedbackOptions = (props) => {
-    //extFunc = this.props.options;
-    const { options, onLeaveFeedback } = props;
+export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
     return (
         <ul className={styles.box}>
             {
